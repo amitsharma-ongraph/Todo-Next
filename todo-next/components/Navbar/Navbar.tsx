@@ -1,5 +1,5 @@
 import Image from "next/image"
-import "@/src/components/Navbar/Navbar.css"
+import "@/components/Navbar/Navbar.css"
 import userIcon from "@/public/user.png"
 import logo from "@/public/task.png"
 
@@ -11,7 +11,7 @@ export default function Navbar() {
                     <Image src={logo} className="logo" alt="logo"/>
                 </div>
                 <div className="text-logo">
-                    <h2>Todo-App</h2>
+                    <h1>Todo-App</h1>
                 </div>
                 <div className="user-info-btn">
                     <Image src={userIcon} className="user-icon" alt="user"/>

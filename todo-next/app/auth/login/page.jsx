@@ -23,7 +23,7 @@ function LoginPage() {
       });
       if (res.data.success === true) {
         localStorage.setItem("todo-token", res.data.token);
-        router.push("/");
+        router.push("/home");
       }
     } catch (error) {
       if (error.response.data.field === "email") {

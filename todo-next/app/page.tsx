@@ -1,9 +1,8 @@
-import Navbar from "@/src/components/Navbar/Navbar"
 
-export default function Home() {
+
+export default function App() {
   return (
-  <div className="Home">
-    <Navbar/>
-  </div>
+   <>
+   </>
   )
 }
