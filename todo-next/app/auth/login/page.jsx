@@ -1,7 +1,7 @@
 "use client";
 
 import "@/app/auth/auth.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -9,10 +9,13 @@ import clsx from "clsx";
 
 function LoginPage() {
   const router = useRouter();
+  const [load,setLoad]=useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+   
 
   const handleLogin = async () => {
     
@@ -34,6 +37,9 @@ function LoginPage() {
     }
   };
 
+  if(setLoad==false){
+    return (<></>)
+  }
   return (
     <>
       <h3>Login</h3>

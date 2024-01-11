@@ -1,0 +1,42 @@
+.details{
+    height:100%;
+    width:100%;
+    color:#aaaaa0;
+    display: grid;
+    grid-template-rows: 40px 40px auto;
+}
+.details>*{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+input{
+    color:#202020;
+}
+.det-h{
+    color:#aaaaa0;
+}
+.det{
+    width:90%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 5%;
+   
+}
+.sec{
+    width: 100%;
+    background-color: #aaaaa0;
+    color:#202020;
+    padding:5px;
+    border-radius: 5px;
+}
+.sec p{
+    width:100%;
+    text-wrap: wrap;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.sec p::-webkit-scrollbar{
+    display: none;
+}

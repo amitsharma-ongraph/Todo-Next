@@ -56,13 +56,15 @@ export const registerController=async (req,res)=>{
     if(name==""){
         res.status(500).send({
             success:false,
-            message:"Please enter a name"
+            message:"Please enter a name",
+            field:"name"
         })
     }
-    else if(password!=confirmPassword){
+    else if(password!=confirmPassword){  
         res.status(500).send({
             success:false,
-            message:"Passwords doesn't match"
+            message:"Passwords doesn't match",
+            field:"confirmPassword"
         })
     }
     else{

@@ -1,0 +1,66 @@
+.task-item-cont{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.task-item{
+    width:95%;
+    background:#aaaaa088;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-evenly;
+    color:#202020;
+    border-radius: 20px;
+    flex-wrap: wrap;
+    flex-flow: row;
+    
+}
+.active{
+    background-color: #aaaaa0;
+}
+.task-title{
+    height:40px;
+    width:60%;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    font-weight: 500;
+    font-size: 0.8em;
+    overflow: hidden;
+    padding-left: 2px;
+}
+.status{
+    height:40px;
+    width:20%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-size: 0.8em;
+}
+.red{
+    color:rgb(105, 34, 34)
+}
+.green{
+    color:rgb(20, 63, 20);
+}
+.delete-btn{
+    height: 20px;
+    width:20px;
+    background-color: #aaaaa022;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bar{
+    height: 10px;
+    width:2px;
+    background-color: #aaaaa0;
+}

@@ -1,0 +1,27 @@
+.task-list-cont{
+    width:90%;
+    height:100%;
+    max-height:70vh;
+    display:grid;
+    grid-template-rows:40px 40px auto;
+    color:#aaaaa0;
+}
+.bar{
+    height:40px;
+    width:1px;
+    background-color: #aaaaa0;
+}
+.task-list-cont::-webkit-scrollbar,.task-list::-webkit-scrollbar{
+    display: none;
+}
+.task-list-cont>*{
+    margin-bottom:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+}
+.task-list{
+    overflow-y: scroll;
+}
+

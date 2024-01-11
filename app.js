@@ -10,10 +10,10 @@ import cors from "cors"
 dotenv.config();
 
 const port = process.env.PORT;
- 
+  
 const app = express();
  
-//middlewares
+//middlewares 
 app.use(bodyParser.json());
 app.use(cors()); 
 
