@@ -5,10 +5,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import clsx from "clsx";
+import { useDispatch } from "react-redux";
+import { updateUserId } from "@/redux/slices/userSlice";
 
 function Register() {
   const router=useRouter();
-
+  const dispatch=useDispatch();
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
@@ -24,6 +26,7 @@ function Register() {
       const res=await axios.post("http://localhost:5000/api/auth/register",{email,password,confirmPassword:confirm,name})
       console.log(res.data)
       router.push("/home");
+      dispatch(updateUserId(res.data.user._id))
     } catch (error) {
       console.log(error.response.data)
       if (error.response.data.field === "email") {

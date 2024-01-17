@@ -1,19 +1,23 @@
 'use client'
-import "@/app/home/home.css"
+import "@/app/todo/todoHome.css"
 import axios from "axios";
 import { useEffect, useState } from "react"
-import TaskList from "@/components/TaskList/TaskList"
-import TaskForm from "@/components/TaskForm/TaskForm"
-import TaskDetails from "@/components/TaskDetails/TaskDetails"
+import TaskList from "@/components/TodoComponents/TaskList/TaskList"
+import TaskForm from "@/components/TodoComponents/TaskForm/TaskForm"
+import TaskDetails from "@/components/TodoComponents/TaskDetails/TaskDetails"
+import { useDispatch, useSelector} from "react-redux";
+import {selectReload, updateTaskId} from "@/redux/slices/taskSlice";
+import {selectUserId } from "@/redux/slices/userSlice";
 
 function HomePage() {
-  const userId="6597e9ddc548f6c7e0d828a5"
+  const userId=useSelector(selectUserId);
+  const reload=useSelector(selectReload)
   const [tasks,setTasks]=useState([]);
-  const [activeTask,setActiveTask]=useState("")
+  const dispatch=useDispatch();
 
   useEffect(()=>{
     getTasks();
-  },[])
+  },[reload]);
 
   const getTasks=async ()=>{
     try{
@@ -21,13 +25,13 @@ function HomePage() {
      setTasks(res.data.tasks);
      console.log(tasks);
      if(res.data.tasks){
-      setActiveTask(res.data.tasks[0]._id);
-      console.log(activeTask);
+      dispatch(updateTaskId(res.data.tasks[0]._id))
      }
     }catch(e){
       console.log(e);
     }
   }
+
  
   return (
 
@@ -36,10 +40,10 @@ function HomePage() {
         <TaskForm userId={userId} getTasks={getTasks}/>
       </div>
       <div className="task-cont flex flex-col justify-start items-center task-list">
-        <TaskList tasks={tasks} activeTask={activeTask} setActiveTask={setActiveTask}/>
+        <TaskList tasks={tasks} />
       </div>
       <div className="detail-cont flex flex-col justify-start items-center">
-        {tasks&&<TaskDetails taskId={activeTask} getTasks={getTasks}/>}
+        {tasks&&<TaskDetails getTasks={getTasks}/>}
       </div>
     </div>
   )

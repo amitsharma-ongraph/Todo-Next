@@ -4,6 +4,7 @@
     color:#aaaaa0;
     display: grid;
     grid-template-rows: 40px 40px auto;
+
 }
 .details>*{
     display: flex;
@@ -18,11 +19,11 @@ input{
 }
 .det{
     width:90%;
+    display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
-    margin-left: 5%;
-   
+    margin-left: 5%;   
 }
 .sec{
     width: 100%;

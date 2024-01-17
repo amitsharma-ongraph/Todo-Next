@@ -1,0 +1,11 @@
+.chat-layout{
+    height: 600px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+.all-convo{
+    background-color: #aaaaa044;
+}
+.convo-cont{
+    background-color: #404040;
+}

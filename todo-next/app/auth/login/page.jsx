@@ -6,6 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken, updateToken, updateUser, updateUserId } from "@/redux/slices/userSlice";
 
 function LoginPage() {
   const router = useRouter();
@@ -15,7 +17,7 @@ function LoginPage() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-   
+  const dispatch=useDispatch();
 
   const handleLogin = async () => {
     
@@ -25,13 +27,20 @@ function LoginPage() {
         password,
       });
       if (res.data.success === true) {
+        console.log(res.data)
         localStorage.setItem("todo-token", res.data.token);
-        router.push("/home");
-      }
+        localStorage.setItem("todo-userId",res.data.user._id);
+        localStorage.setItem("todo-user",JSON.stringify(res.data.user))
+        dispatch(updateToken(res.data.token))
+        dispatch(updateUser(res.data.user))
+        dispatch(updateUserId(res.data.user._id));
+        router.push("/todo");
+      } 
     } catch (error) {
-      if (error.response.data.field === "email") {
+      console.log(error)
+      if (error.response?.data?.field === "email") {
         setEmailError(error.response.data.message);
-      } else if (error.response.data.field === "password") {
+      } else if (error.response?.data?.field === "password") {
         setPasswordError(error.response.data.message);
       }
     }

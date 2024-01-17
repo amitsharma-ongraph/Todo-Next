@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import "@/app/globals.css"
 import 'tailwindcss/tailwind.css'
-import axios from 'axios'
 import StoreProvider from "@/redux/StoreProvider"
 
 export const metadata: Metadata = {

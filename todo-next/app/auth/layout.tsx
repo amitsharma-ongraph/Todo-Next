@@ -1,9 +1,11 @@
 "use client"
 import { isLogin } from "@/helpers/helpers"
 import userLogo from "@/public/images/user.png"
+import { selectToken } from "@/redux/slices/userSlice"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 const authLayout=({ children,
 }: {
@@ -18,7 +20,7 @@ const authLayout=({ children,
       const redirect = async()=>{
        const login=await isLogin();
        if(login){
-        router.push("/home")
+        router.push("/todo")
        }
        else{
         setLoad(true)

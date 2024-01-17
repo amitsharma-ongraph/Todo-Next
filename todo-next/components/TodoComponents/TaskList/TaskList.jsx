@@ -1,6 +1,6 @@
 "use client"
-import "@/components/TaskList/TaskList.css"
-import TaskItem from "@/components/TaskItem/TaskItem"
+import "@/components/TodoComponents/TaskList/TaskList.css"
+import TaskItem from "@/components/TodoComponents/TaskItem/TaskItem"
 
 function TaskList({tasks,activeTask,setActiveTask,getTasks}) {
   return (
@@ -9,10 +9,11 @@ function TaskList({tasks,activeTask,setActiveTask,getTasks}) {
         <h2>All Tasks</h2>
       </div>
       <div className="options">
-        <h2>options</h2>
+        {/* <h2>options</h2> */}
       </div>
       <div className="task-list">
-        {tasks&&tasks.map(task=>{
+        {tasks.length==0&&<div className="no-items">No Tasks</div>}
+        {tasks.length!=0&&tasks.map(task=>{
             return (
                 <TaskItem task={task} key={task._id} activeTask={activeTask} setActiveTask={setActiveTask} getTasks={getTasks}/>
             )

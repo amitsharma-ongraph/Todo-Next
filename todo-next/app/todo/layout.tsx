@@ -1,16 +1,16 @@
 "use client"
 import Navbar from "@/components/Navbar/Navbar"
-import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import {isLogin} from "@/helpers/helpers"
+import { useSelector } from "react-redux"
+import { selectToken } from "@/redux/slices/userSlice"
 
 const HomeLayout=({ children,
 }: {
     children: React.ReactNode
 }
 ) =>{
-    
     const [load,setLoad]=useState(false);
     const router=useRouter();
     useEffect(()=>{

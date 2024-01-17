@@ -1,0 +1,32 @@
+.update-form{
+   display:flex;
+   justify-content: flex-start;
+   align-items: flex-start;
+   width:90%;
+   background-color: #aaaaa011;
+   border-radius: 20px;
+   padding: 20px;
+}
+.update-form .input{
+   width:100%;
+}
+.update-form select *{
+    border-radius:15px;
+    background-color: #aaaaa0;
+    color:#202020;
+}
+.update-form .description{
+    height:100px;
+}
+.update-form.disabled .input.text-input{
+    background-color: #aaaaa022;
+}
+.update-form.disabled .submit{
+    background-color: #aaaaa022;
+}
+.update-form.disabled{
+    background-color:transparent;
+}
+.description::-webkit-scrollbar{
+    display: none;
+}

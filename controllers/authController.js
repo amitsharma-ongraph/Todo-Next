@@ -32,7 +32,8 @@ export const  loginController=async (req,res)=>{
         res.status(200).send({
             success:true, 
             message:"Login sucessfull",
-            token:token
+            token:token,
+            user
         })
     }
     else{
@@ -48,9 +49,12 @@ export const registerController=async (req,res)=>{
     const {name,email,password,confirmPassword}=req.body;
     const existingUser=await userModel.findOne({email})
     if(existingUser){
+        const token=Jwt.sign({_Id:existingUser._Id},process.env.JWT_SECRET,{expiresIn:"1d"});
         res.status(200).send({
             success:true,
-            message:"Already Registered"
+            message:"Already Registered",
+            token,
+            user:existingUser
         })
     }
     if(name==""){
@@ -75,10 +79,11 @@ export const registerController=async (req,res)=>{
             name,email,password:hashedPassword
          }).save().then((user)=>{
            const token=Jwt.sign({_Id:user._Id},process.env.JWT_SECRET,{expiresIn:"1d"})
-           res.status(201).send({
+           res.status(201).send({ 
             success:true,
             message:"Registered Successfully",
-            token:token
+            token:token,
+            user
            })
          })
        }catch(err){

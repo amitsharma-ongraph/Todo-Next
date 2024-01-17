@@ -13,7 +13,8 @@
     "mongoose": "^8.0.3",
     "next-redux-wrapper": "^8.1.0",
     "nodemon": "^3.0.2",
-    "react-redux": "^9.0.4"
+    "react-redux": "^9.0.4",
+    "socket.io": "^4.7.4"
   },
   "name": "todo-react",
   "version": "1.0.0",
