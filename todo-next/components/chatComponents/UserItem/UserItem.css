@@ -1,19 +1,21 @@
 
 .user-item{
-    height: 40px;
-    width:90%;
+    width:95%;
     border-radius: 5px;
-    background-color: #aaaaa044;
-    margin-top: 10px;
+    background-color: #e3f4f4;
+    margin-top: 5px;
     display: grid;
     grid-template-columns: 25% 75%;
     cursor: pointer;
+    height: 50px;
+}
+.user-item:hover{
+    background-color: #d2e9e9;
 }
 .convo-log-cont{
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center; 
 }
 .convo-logo{
     height:35px;
@@ -22,18 +24,21 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    background-color: #202020;
-    color: #aaaaa0;
+    background-color: #9bbdff;
+    color: #516565;
 }
 .user-name{
     display: flex;
     align-items: center;
-    color:#E0EEE0;
+    color:#516565;
 }
 .active-convo{
-    background-color: #aaaaa0;
+    background-color: #d2e9e9;
     color:#202020;
 }
 .active-convo .user-name{
     color:#202020;
+}
+.online .convo-logo{
+    background-color: #aacb7c;
 }

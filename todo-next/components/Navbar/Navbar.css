@@ -45,6 +45,6 @@ h1{
 .Navbar.nav-light .nav{
    background-color: #f8f6f4;
 }
-.Navbar h1{
-    color:#9babb8
+.Navbar.nav-light h1{
+    color:#516565;
 }

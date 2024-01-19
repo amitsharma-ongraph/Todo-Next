@@ -1,16 +1,17 @@
 "use client"
 
 import { useGetAllUsersQuery } from "@/redux/api/apiSlice"
-import { selectSenderId } from "@/redux/slices/chatDataSlice"
+import { selectActiveUsers, selectSenderId, setActiveUsers } from "@/redux/slices/chatDataSlice"
 import { socket } from "@/src/socket"
 import { useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import UserItem from "@/components/chatComponents/UserItem/UserItem"
 
 function page() {
+  const dispatch=useDispatch()
   useEffect(()=>{
     socket.on("activeUsers",(activeUsers)=>{
-      console.log("active users changed",activeUsers)
+      dispatch(setActiveUsers(activeUsers))
   })
   },[])
   const userId=useSelector(selectSenderId);
