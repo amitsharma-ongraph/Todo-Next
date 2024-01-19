@@ -25,7 +25,7 @@ function Register() {
     try {
       const res=await axios.post("http://localhost:5000/api/auth/register",{email,password,confirmPassword:confirm,name})
       console.log(res.data)
-      router.push("/home");
+      router.push("/todo");
       dispatch(updateUserId(res.data.user._id))
     } catch (error) {
       console.log(error.response.data)

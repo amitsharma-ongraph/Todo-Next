@@ -13,7 +13,7 @@ export default function Navbar() {
     const pathname=usePathname();
     const dispatch=useDispatch();
     return (
-        <div className="Navbar">
+        <div className={`Navbar ${pathname=="/socket"?"nav-light":""}`}>
             <div className="nav">
                 <div className="logo-cont">
                     <Image src={logo} className="logo" alt="logo" onClick={e=>{router.push("/todo")}}/>

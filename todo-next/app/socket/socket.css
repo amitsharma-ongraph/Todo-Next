@@ -1,0 +1,38 @@
+
+.chat-app-layout{
+    height: 100vh;
+    width:100%;
+    background-color: gray;
+    z-index: 8;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.chat-screen{
+    height: 100%;
+    width:100%;
+    padding-top: 60px;
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+.left-side-bar{
+    background-color: rgb(154, 143, 143);
+    display: grid;
+    grid-template-rows: 20% 80%;
+}
+.chat-section{
+    background-color: #f8f6f4;
+}
+.user-list{
+    overflow-y: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: #e3f4f4;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.host-details{
+    background-color: #d2e9e9;
+}

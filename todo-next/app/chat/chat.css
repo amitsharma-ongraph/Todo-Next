@@ -1,5 +1,6 @@
 .chat-layout{
-    height: 600px;
+    
+    height: 590px;
     display: grid;
     grid-template-columns: 25% 75%;
 }
@@ -7,5 +8,105 @@
     background-color: #aaaaa044;
 }
 .convo-cont{
-    background-color: #404040;
+    background-color: #202020;
+    position: relative;
+}
+.user-list{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.receiver-details{
+    position:sticky;
+    right:10px;
+    top:60px;
+    height: 80px;
+    width:100%;
+    background-color: #aaaaa011;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.receiver-logo-cont{
+    margin-right: 20px;
+    height:80%;
+    align-self:flex-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.receiver-logo{
+    height:50px;
+    width:50px;
+    background-color: #aaaaa0;
+    color:#202020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-weight: 500;
+}
+.receiver-name{
+    color:#aaaaa0
+}
+.chat-controlls{
+    height: 100px;
+    width:100%;
+    position:sticky;
+    top:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+}
+.message-input{
+    height:30px;
+    width:80%;
+    background-color: #aaaaa044;
+    border-radius: 30px;
+    padding-left: 10px;
+    color:#aaaaa0
+}
+input:focus{
+    border: none;
+}
+.send-btn{
+    height: 30px;
+    width:30px;
+}
+.message-item{
+    background-color: #aaaaa0;
+    border-radius: 25px;
+    margin: 0px 10px 10px 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    min-width:80px;
+    max-width: 45%;
+    text-wrap: wrap;
+}
+.chat-flow{
+    display:flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    height: 400px;
+    overflow-y: scroll;
+    width:100%;
+    overflow-x: hidden;
+}
+.chat-flow::-webkit-scrollbar{
+    display: none;
+}
+.item-left{
+    align-self:flex-start;
+    border-top-left-radius: 0;
+}
+.message-item.item-right{
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
 }
