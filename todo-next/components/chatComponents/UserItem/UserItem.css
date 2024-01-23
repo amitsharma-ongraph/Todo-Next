@@ -42,3 +42,10 @@
 .online .convo-logo{
     background-color: #aacb7c;
 }
+.last-msg{
+    font-size: 0.6em;
+}
+.convo-data{
+    display: grid;
+    grid-template-rows: 60% 40%;
+}

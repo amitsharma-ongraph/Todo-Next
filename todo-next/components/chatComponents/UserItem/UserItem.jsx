@@ -19,7 +19,10 @@ function UserItem({user}) {
       <div className="flex align-center justify-center convo-log-cont">
         <div className="convo-logo">{user.name[0].toLowerCase()}</div>
       </div>
-      <div className="user-name">{user.name}</div>
+      <div className="convo-data">
+          <div className="user-name">{user.name}</div>
+          <div className="last-msg">last received message</div>
+      </div>
     </div>
   )
 }

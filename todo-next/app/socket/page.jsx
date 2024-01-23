@@ -15,7 +15,7 @@ function page() {
   })
   },[])
   const userId=useSelector(selectSenderId);
-  const convoData=useGetAllUsersQuery({userId})
+  const convoData=useGetAllUsersQuery({userId});
 
   return (
     <div className="chat-screen">
