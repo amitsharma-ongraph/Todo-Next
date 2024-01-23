@@ -55,8 +55,20 @@ export const apiSlice=createApi({
                     "authorization":params.token
                 }
             })
+        }),
+        getAllConvo:builder.query({
+            query:(params)=>({
+                url:"/get-allConvo",
+                method:"post",
+                body:{
+                    userId:params.userId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
         })
     })
 });
 
-export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery}=apiSlice
+export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery,useGetAllConvoQuery}=apiSlice

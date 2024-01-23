@@ -8,16 +8,20 @@ const messageSchema=mongoose.Schema({
         ref:"users",
         required:true
     },
-    receiverId:{
+    chatId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"users",
+        ref:"chat",
         required:true
     },
     content:{
         type:String,
         trim:"true",
         required:true
-    }
+    },
+    seenBy:[{
+        type:mongoose.Schema.Types.ObjectId,
+        red:"users"
+    }]
 },{
     timestamps:true
 })

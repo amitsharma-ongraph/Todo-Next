@@ -10,7 +10,7 @@
     height: 50px;
 }
 .user-item:hover{
-    background-color: #d2e9e9;
+    background-color: #51656522;
 }
 .convo-log-cont{
     display: flex;
@@ -33,7 +33,7 @@
     color:#516565;
 }
 .active-convo{
-    background-color: #d2e9e9;
+    background-color: #51656522;
     color:#202020;
 }
 .active-convo .user-name{
