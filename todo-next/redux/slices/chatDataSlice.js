@@ -14,7 +14,8 @@ export const chatDataSlice=createSlice({
     initialState:{
         senderId:getSenderId(),
         activeConvo:{},
-        activeUsers:[]
+        activeUsers:[],
+        modId:"65b0b29602b7aefdaa2ccac8"
     },
     reducers:{
        updateSender:(state,action)=>{
@@ -34,4 +35,5 @@ export const {updateActiveConvo,updateSender,setActiveUsers} = chatDataSlice.act
 export const selectSenderId=(state)=>state.chatData.senderId
 export const selectActiveConvo=(state)=>state.chatData.activeConvo
 export const selectActiveUsers=(state)=>state.chatData.activeUsers
+export const selectModId=(state)=>state.chatData.modId
 export default chatDataSlice.reducer

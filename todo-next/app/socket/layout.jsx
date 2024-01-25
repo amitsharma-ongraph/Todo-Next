@@ -42,6 +42,12 @@ function layout({ children }) {
     socket.on("activeUsers", (activeUsers) => {
       dispatch(setActiveUsers(activeUsers));
     });
+    socket.on("receiveMessage",()=>{
+      convoData.refetch();
+    })
+    socket.on("onSetSeen",()=>{
+      convoData.refetch();
+    })
   }, []);
 
   return (

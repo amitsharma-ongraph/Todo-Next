@@ -1,0 +1,10 @@
+.messages-cont{
+    height: 100%;
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}

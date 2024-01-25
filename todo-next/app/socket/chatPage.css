@@ -2,7 +2,7 @@
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows:10% 90%;
+    grid-template-rows:10% auto 60px;
     position: relative;
 }
 .convo-details{
@@ -56,11 +56,31 @@
 }
 
 .controlls{
-    height: 50px;
-    width: 100%;
-    position: absolute;
-    bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    column-gap: 20px;
+    padding-bottom: 10px;
+}
+
+.msg-form{
+    width: 60%;
+}
+.msg-input{
+      resize: none; 
+      overflow: hidden; 
+      border: 1px solid #ccc;
+      font-size: 16px;
+      width:100%;
+      border-radius: 20px;
+      padding-left: 10px;
+      height: 40px;
+      overflow-wrap: break-word;
+      background-color: #d2e9e9;
+}
+.msg-input:active{
+    border: 0px solid none;
+}
+.messages{
+    overflow: hidden;
 }

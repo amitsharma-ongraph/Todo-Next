@@ -21,7 +21,11 @@ const messageSchema=mongoose.Schema({
     seenBy:[{
         type:mongoose.Schema.Types.ObjectId,
         red:"users"
-    }]
+    }],
+    isDeleted:{
+        type:Boolean,
+        default:false
+    }
 },{
     timestamps:true
 })

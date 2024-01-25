@@ -3,15 +3,21 @@ import "@/app/socket/chatPage.css"
 
 import { selectActiveConvo, selectActiveUsers, selectSenderId } from "@/redux/slices/chatDataSlice"
 import Image from "next/image"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import multipleUser from "@/public/images/users.png"
+import sendIcon from "@/public/images/send (2).png";
+import Messages from "@/components/chatComponents/messages/Messages"
+import { socket } from "@/src/socket"
+import store from "@/redux/store"
+import { apiSlice } from "@/redux/api/apiSlice"
 
 function page() {
   const activeConvo=useSelector(selectActiveConvo)
   const senderId=useSelector(selectSenderId);
   const activeUsers=useSelector(selectActiveUsers);
 
+  const [message,setMessage]=useState("")
   const isActive=()=>{
     return activeConvo.users?.some(user=>{
       if(user._id!=senderId&&activeUsers.includes(user._id)){
@@ -23,14 +29,24 @@ function page() {
      })
   }
   useEffect(()=>{
-    
-  },[])
+    setMessage("")
+  },[activeConvo])
   
-  console.log("convo results--",activeConvo)
+  const handleSendMessage =async ()=>{
+     let seenByUsers=await activeConvo.users?.filter(user=>user._id!=senderId);
+     let seenBy=await seenByUsers.map(user=>user._id);
+     const res=await store.dispatch(apiSlice.endpoints.sendMessage.initiate({senderId,chatId:activeConvo._id,seenBy,content:message}))
+     console.log(res.data)
+     socket.emit("sendMessage");
+     setMessage("");
+  }
+
+
   return (
         <>
-        {activeConvo.chatName&&
+         {activeConvo.chatName&&
           <div className="conversation">
+            
               <div className="convo-details">
                 <div className="convo-name-details">
                    <div className="convo-avatar">
@@ -47,15 +63,21 @@ function page() {
 
                 </div>
               </div>
-              <div className="messages"></div>
-              <div className="controlls">
-                <form action="">
-                  <input type="text"></input>
-                </form>
-                <button></button>
+              <div className="messages">
+                <Messages />
               </div>
-          </div>
-        }
+              
+             
+              <div className="controlls" onSubmit={e=>{e.preventDefault();handleSendMessage()}}>
+                <form action="" className="msg-form">
+                  <input type="text" className="msg-input" value={message} onChange={e=>{setMessage(e.target.value)}}></input>
+                </form>
+                <button onClick={handleSendMessage}> 
+                  <Image src={sendIcon} height={24} width={24} alt="send" />
+                </button>
+              </div>
+          </div> 
+          }
         </>
   )
 }

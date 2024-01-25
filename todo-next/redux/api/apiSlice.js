@@ -34,8 +34,7 @@ export const apiSlice=createApi({
                 url:"/get-messages",
                 method:"post",
                 body:{
-                    user1:params.hostUserId,
-                    user2:params.friendUserId
+                    chatId:params.chatId
                 },
                 headers:{
                     "authorization":params.token
@@ -47,9 +46,10 @@ export const apiSlice=createApi({
                 url:"/send-message",
                 method:"post",
                 body:{
-                    senderId:params.hostUserId,
-                    receiverId:params.friendUserId,
-                    content:params.content
+                    senderId:params.senderId,
+                    chatId:params.chatId,
+                    content:params.content,
+                    seenBy:params.seenBy
                 },
                 headers:{
                     "authorization":params.token
@@ -62,6 +62,19 @@ export const apiSlice=createApi({
                 method:"post",
                 body:{
                     userId:params.userId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        setSeen:builder.mutation({
+            query:(params)=>({
+                url:"/set-seen",
+                method:"post",
+                body:{
+                    messageId:params.messageId,
+                    senderId:params.senderId
                 },
                 headers:{
                     "authorization":params.token

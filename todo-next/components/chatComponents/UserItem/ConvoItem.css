@@ -5,7 +5,7 @@
     background-color: #e3f4f4;
     margin-top: 5px;
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 25% 65% 10%;
     cursor: pointer;
     height: 50px;
 }
@@ -44,8 +44,24 @@
 }
 .last-msg{
     font-size: 0.6em;
+    color: #033636;
 }
 .convo-data{
     display: grid;
     grid-template-rows: 60% 40%;
+}
+.pending{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pending-icon{
+    height:10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: #516565;
+}
+.not-seen{
+    font-weight: 700;
+    font-size: 0.7em;
 }

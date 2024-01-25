@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
       socket.emit("connected");
     });
     socket.on('sendMessage', () => {
-        io.emit('message');
+        io.emit("receiveMessage");
         console.log("message received")
     });
     socket.on("setOnline",({userId,socketId})=>{
@@ -75,6 +75,9 @@ io.on("connection", (socket) => {
         activeUsers=activeUsers.filter(user=>user.socketId!==socket.id)
         console.log(" a user disconnected",activeUsers)
         io.emit("activeUsers",getUsersList(activeUsers));
+    })
+    socket.on("setSeen",()=>{
+        io.emit("onSetSeen");
     })
 }) 
 io.on("connect_error", (error) => {
