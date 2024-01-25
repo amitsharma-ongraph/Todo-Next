@@ -3,9 +3,9 @@
 
 function CreateGroupLayout({children}) {
   return (
-    <div>
+    <>
       {children}
-    </div>
+    </>
   )
 }
 

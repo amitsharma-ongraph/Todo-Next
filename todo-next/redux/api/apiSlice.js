@@ -80,7 +80,35 @@ export const apiSlice=createApi({
                     "authorization":params.token
                 }
             })
-        })
+        }),
+        addUserConvo:builder.mutation({
+            query:(params)=>({
+                url:"/add-user",
+                method:"post",
+                body:{
+                    chatName:params.users[0]+"-"+params.users[1],
+                    users:params.users
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        createGroup:builder.mutation({
+            query:(params)=>({
+                url:"/create-group",
+                method:"post",
+                body:{
+                    chatName:params.chatName,
+                    users:params.users,
+                    groupAdmin:params.groupAdmin
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        
     })
 });
 

@@ -6,7 +6,7 @@ import userModel from "../models/userModel.js"
 export const getAllUserController=async (req,res)=>{
     const {userId}=req.body
     try{
-        const users =await userModel.find({_id:{$ne:userId}})
+        const users =await userModel.find({$and:[{_id:{$ne:userId}},{_id:{$ne:"65b0b29602b7aefdaa2ccac8"}}]})
         res.status(200).send({
             success:true,
             message:"users fetched successfully",
@@ -18,6 +18,37 @@ export const getAllUserController=async (req,res)=>{
             message:"error while fetching users"
         })
     }
+}
+export const getUserOptionsController=async(req,res)=>{
+    const {userId}=req.body;
+    
+    const allUsers=await userModel.find({$and:[{_id:{$ne:userId}},{_id:{$ne:"65b0b29602b7aefdaa2ccac8"}}]}).then(async (allUsers)=>{
+        const allConvo=await chatModel.find({$and:[{users:userId},{isGroupChat:false}]}).then(async (allConvo)=>{
+                
+                allConvo.forEach(convo=>{
+                    allUsers=allUsers.filter(option=>option._id.toString()==convo.users[0]._id.toString());
+                    allUsers=allUsers.filter(option=>option._id.toString()==convo.users[1]._id.toString());
+                })
+
+                return res.status(200).send({
+                    success:true,
+                    message:"all options fetched",
+                    options:allUsers
+                })
+        }).catch(e=>{
+            console.log(e)
+            return res.status(500).send({
+                success:false,
+                message:"error while adding user"
+            })
+        })
+    }).catch((e)=>{
+        return res.status(500).send({
+            success:false,
+            message:"error while adding user"
+        })
+    })
+    
 }
 export const getReceiverController=async(req,res)=>{
     const {receiverId}=req.body
@@ -47,12 +78,24 @@ export const getReceiverController=async(req,res)=>{
 export const addUserConvoController=async (req,res)=>{
     const {chatName,users}=req.body;
     try{
-        const newChat=await new chatModel({chatName,users}).save();
-        return res.status(201).send({
-            success:true,
-            message:"conversation created",
-            chat:newChat
-        })
+        const newChat=await new chatModel({chatName,users}).save().then(async (newChat)=>{
+              const botMessage=await new messageModel({senderId:"65b0b29602b7aefdaa2ccac8",chatId:newChat._id,content:"Conversation created"}).save().then(async (botMessage)=>{
+                await chatModel.findByIdAndUpdate(newChat._id,{latestMessage:botMessage._id}).then(()=>{
+                    return res.status(201).send({
+                        success:true,
+                        message:"conversation created",
+                        chat:newChat
+                    })
+                })
+              })
+        }).catch(e=>{
+            console.log(e);
+            return res.status(500).send({
+                success:false,
+                message:"error while creating a new conversation"
+            })
+        });
+       
     }catch(e){
         console.log(e);
         return res.status(500).send({
@@ -65,11 +108,23 @@ export const addUserConvoController=async (req,res)=>{
 export const createGroupController=async(req,res)=>{
     const {chatName,users,groupAdmin}=req.body;
     try{
-        const newGroup=await new chatModel({chatName,users,groupAdmin,isGroupChat:true}).save();
-        return res.status(201).send({
-            success:true,
-            message:"Group Created"
-        })
+        const newGroup=await new chatModel({chatName,users,groupAdmin,isGroupChat:true}).save().then(async (newChat)=>{
+            const botMessage=await new messageModel({senderId:"65b0b29602b7aefdaa2ccac8",chatId:newChat._id,content:"Group created"}).save().then(async (botMessage)=>{
+              await chatModel.findByIdAndUpdate(newChat._id,{latestMessage:botMessage._id}).then(()=>{
+                  return res.status(201).send({
+                      success:true,
+                      message:"conversation created",
+                      chat:newChat
+                  })
+              })
+            })
+      }).catch(e=>{
+          console.log(e);
+          return res.status(500).send({
+              success:false,
+              message:"error while creating a new conversation"
+          })
+      });
     }catch(e){
         console.log(e);
         res.status(500).send({

@@ -1,0 +1,105 @@
+.create-group-page{
+    height: 100%;
+    width:100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.add-user-cont{
+    height: 80%;
+    width:60%;
+    background-color: #d2e9e922;
+    border-radius: 20px;
+    min-width: 280px;
+    display: grid;
+    grid-template-rows: 60px 60px auto 50px;
+}
+.user-option{
+    display: grid;
+    grid-template-columns: 40px auto 30px;
+    background-color: #d2e9e988;
+    height: 40px;
+    width:90%;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.user-option-icon{
+    height:30px;
+    width:30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #03363688;
+    color:#d2e9e9;
+    margin-left: 5px;
+}
+.user-options-cont{
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 10px;
+    margin-top: 20px;
+}
+.user-option-icon-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-option-details{
+    color:#033636;
+    font-size: 0.8em;
+}
+.add-user-input-cont,.group-name-input-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #d2e9e988;
+    column-gap: 10px;
+}
+.add-user-input,.group-name-input{
+    height: 40px;
+    width: 70%;
+    border-radius: 20px;
+    background-color: #d2e9e988;
+    padding-left: 10px;
+    color:#033636;
+    font-size: 1em;
+}
+.add-user-input::placeholder,.group-name-input::placeholder{
+    font-size: 1em;
+    color:#03363688;
+}
+.add-user-button{
+    height: 40px;
+    width: 80px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #033636;
+    transition: 0.5s;
+    background-color: #d2e9e944;
+}
+.add-user-button:hover{
+    background-color: #d2e9e988;
+}
+.check-cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.create-group-page h1{
+    color:#03363688;
+    margin-top: 10px;
+}
+.btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
