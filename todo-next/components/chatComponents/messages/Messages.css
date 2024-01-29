@@ -8,3 +8,23 @@
     overflow-y: scroll;
     padding-bottom: 20px;
 }
+.seen-cont{
+  height: 30px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  column-gap: 5px;
+  padding-right: 20px;
+  align-items: center;
+}
+.seen-icon{
+    height: 20px;
+    width:20px;
+    background-color: #d2e9e9;
+    color: #033636;
+    border-radius: 50%;
+    font-size: 0.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

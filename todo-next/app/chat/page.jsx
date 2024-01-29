@@ -1,74 +1,83 @@
 "use client"
-import { useEffect, useState } from "react"
-import "@/app/chat/chat.css"
-import { useDispatch, useSelector } from "react-redux"
-import { selectReceiverId, selectSenderId } from "@/redux/slices/chatDataSlice"
-import { useGetFriendUserQuery, useGetMessagesQuery} from "@/redux/api/apiSlice"
+import "@/app/chat/chatPage.css"
+
+import { selectActiveConvo, selectActiveUsers, selectSenderId } from "@/redux/slices/chatDataSlice"
 import Image from "next/image"
-import sendIcon from "@/public/images/send (1).png"
-import { apiSlice } from "@/redux/api/apiSlice"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import multipleUser from "@/public/images/users.png"
+import sendIcon from "@/public/images/send (2).png";
+import Messages from "@/components/chatComponents/messages/Messages"
+import { socket } from "@/src/socket"
 import store from "@/redux/store"
-import {socket,EndPoint} from "@/src/socket"
-// import io from "socket.io-client";
+import { apiSlice } from "@/redux/api/apiSlice"
 
-// const EndPoint="http://localhost:5000" 
-// let socket;
 function page() {
-  const hostUserId=useSelector(selectSenderId);
-  const friendUserId=useSelector(selectReceiverId);
-  const dispatch=useDispatch();
+  const activeConvo=useSelector(selectActiveConvo)
+  const senderId=useSelector(selectSenderId);
+  const activeUsers=useSelector(selectActiveUsers);
+
   const [message,setMessage]=useState("")
-  const friendUserRes=useGetFriendUserQuery({friendUserId});
-  
-  const msgRes=useGetMessagesQuery({hostUserId,friendUserId});
-
-  // useEffect(()=>{   
-  //   socket.on('message', () => {
-  //     console.log("client triggered");
-  //     msgRes.refetch();
-  //   });
-  //   socket.emit("setOnline",hostUserId);
-  //   socket.on("disconnect",()=>{ 
-  //     socket.emit("setOffline",hostUserId);  
-  //   }) 
-  //   socket.on("activeUsers",(users)=>{
-  //     console.log("another connected")
-  //   }) 
-  // },[EndPoint]) 
-
-  const handleSendMessage=async()=>{
-    let res=await store.dispatch(apiSlice.endpoints.sendMessage.initiate({hostUserId,friendUserId,content:message}))
-    socket.emit("sendMessage");
-    setMessage("")  
+  const isActive=()=>{
+    return activeConvo.users?.some(user=>{
+      if(user._id!=senderId&&activeUsers.includes(user._id)){
+        return true;
+      }
+      else{
+        return false;
+      }
+     })
   }
+  useEffect(()=>{
+    setMessage("")
+  },[activeConvo])
+  
+  const handleSendMessage =async ()=>{
+     let seenBy=[senderId];
+     const res=await store.dispatch(apiSlice.endpoints.sendMessage.initiate({senderId,chatId:activeConvo._id,seenBy,content:message}))
+     console.log(res.data)
+     socket.emit("sendMessage");
+     setMessage("");
+  }
+
+
   return (
-    <>
-     <div className="receiver-details">
-      <div className="receiver-logo-cont">
-        <div className="receiver-logo">{friendUserRes.data?.user.name[0].toUpperCase()}</div>
-        <div className="receiver-name">
-          <p>{friendUserRes.data?.user.name}</p>
-          <p>{friendUserRes.data?.user.email}</p>
-        </div>
-      </div>
-     </div>
-     <div className="chat-flow">
-       {msgRes.data&&<>
-           {msgRes.data.messages.map((msg)=>{
+        <>
+         {activeConvo.chatName&&
+          <div className="conversation">
             
-              return (
-                <p id={msg._id} className={`message-item ${msg.senderId==friendUserId?"item-left":"item-right"}`} key={msg._id}>{msg.content}</p>
-              )
-           })}
-       </>}
-     </div>
-     <form className="chat-controlls" onSubmit={e=>{e.preventDefault();handleSendMessage()}}>
-       <input type="text" className="message-input" placeholder="Enter your message" value={message} onChange={e=>{setMessage(e.target.value)}}/>
-       <button type="submit" className="send-btn">
-       <Image src={sendIcon} alt="send" onClick={handleSendMessage} />
-       </button>
-     </form>
-    </>
+              <div className="convo-details">
+                <div className="convo-name-details">
+                   <div className="convo-avatar">
+                     {!activeConvo.isGroupChat&&activeConvo.chatName?activeConvo.chatName[0]:""}
+                     {activeConvo.isGroupChat&&<Image src={multipleUser} alt="G" height={24} width={24}/>}
+                   </div>
+                   <div className="convo-name">
+                     <p>{activeConvo.chatName}</p>
+                     {activeConvo.isGroupChat&&<p className="participants">{activeConvo.users.length} Participants</p>}
+                     {!activeConvo.isGroupChat&&isActive()&&<div className="online-cont"><div className="online-icon"></div><div>Active Now</div></div>}
+                   </div>
+                </div>
+                <div>
+
+                </div>
+              </div>
+              <div className="messages">
+                <Messages />
+              </div>
+              
+             
+              <div className="controlls" onSubmit={e=>{e.preventDefault();handleSendMessage()}}>
+                <form action="" className="msg-form">
+                  <input type="text" className="msg-input" value={message} onChange={e=>{setMessage(e.target.value)}}></input>
+                </form>
+                <button onClick={handleSendMessage}> 
+                  <Image src={sendIcon} height={24} width={24} alt="send" />
+                </button>
+              </div>
+          </div> 
+          }
+        </>
   )
 }
 

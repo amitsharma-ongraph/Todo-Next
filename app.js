@@ -79,6 +79,9 @@ io.on("connection", (socket) => {
     socket.on("setSeen",()=>{
         io.emit("onSetSeen");
     })
+    socket.on("newConvo",()=>{
+        io.emit("onNewConvo");
+    })
 }) 
 io.on("connect_error", (error) => {
     console.error("Connection error:", error);

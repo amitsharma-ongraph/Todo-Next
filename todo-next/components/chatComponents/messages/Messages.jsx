@@ -13,7 +13,7 @@ export default function Messages() {
   const messagesRes=useGetMessagesQuery({chatId:activeConvo._id});
   const modId=useSelector(selectModId);
   const senderId=useSelector(selectSenderId);
-
+  
   useEffect(()=>{
     socket.on("receiveMessage",()=>{
       messagesRes.refetch();

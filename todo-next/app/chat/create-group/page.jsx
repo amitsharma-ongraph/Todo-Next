@@ -1,6 +1,6 @@
 "use client"
 
-import "@/app/socket/create-group/CreateGroup.css"
+import "@/app/chat/create-group/CreateGroup.css"
 import { apiSlice, useGetAllUsersQuery } from "@/redux/api/apiSlice"
 import { selectSenderId } from "@/redux/slices/chatDataSlice";
 import Image from "next/image";
@@ -42,8 +42,8 @@ function CreateGroup() {
   }
   const handleCreateGroup=async ()=>{
     await store.dispatch(apiSlice.endpoints.createGroup.initiate({chatName:groupName,users:[...activeOption,senderId],groupAdmin:senderId})).then(res=>{
-      socket.emit("sendMessage");
-      router.push("/socket/")
+      socket.emit("newConvo");
+      router.push("/chat")
     }).catch(e=>{
       console.log(e)
     })

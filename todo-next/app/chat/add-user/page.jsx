@@ -1,5 +1,5 @@
 "use client"
-import "@/app/socket/add-user/AddUser.css"
+import "@/app/chat/add-user/AddUser.css"
 import { apiSlice, useGetUserOptionQuery } from "@/redux/api/apiSlice"
 import { selectSenderId } from "@/redux/slices/chatDataSlice";
 import Image from "next/image";
@@ -33,9 +33,8 @@ function AddUser() {
   const handleAddUser=async()=>{
     const addRes=await store.dispatch(apiSlice.endpoints.addUserConvo.initiate({users:[senderId,activeOption]})).then((addRes)=>{
       if(addRes.data?.success==true){
-        socket.emit('sendMessage');
-        dispatch(setActiveOption(addRes.data.chat))
-        router.push("/socket")
+        socket.emit('newConvo');
+        router.push("/chat")
       }
     }).catch(e=>{
        console.log(e)
