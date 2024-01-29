@@ -22,11 +22,14 @@ export const getAllUserController=async (req,res)=>{
 export const getUserOptionsController=async(req,res)=>{
     const {userId}=req.body;
     
-    const allUsers=await chatModel.find({$and:[{isGroupChat:false},{_id:userId}]}).then((allUsers)=>{
-        res.status(200).send({
-            success:true,
-            message:"options fetched successfully",
-            options:allUsers
+    const allConvo=await chatModel.find({$and:[{isGroupChat:false},{users:userId}]}).then(async (allConvo)=>{
+        const allUsers=await userModel.find({$and:[{_id:{$ne:userId}},{_id:{$ne:"65b0b29602b7aefdaa2ccac8"}}]}).then(async (allUsers)=>{
+            const options=await getOptions(allConvo,allUsers);
+            res.status(200).send({
+                success:true,
+                message:"options fetched successfullly",
+                options
+            })
         })
     }).catch((e)=>{
         res.status(500).send({
@@ -35,6 +38,23 @@ export const getUserOptionsController=async(req,res)=>{
         })
     })
     
+}
+
+const getOptions=async (allConvo,allUsers)=>{
+    let users=[];
+   await allUsers.forEach(async user=>{
+    let add=true
+     allConvo.forEach(convo=>{
+        if(convo.users[0].toString()==user._id.toString()||convo.users[1].toString()==user._id.toString()){
+            add=false
+        }
+     })
+     if(add){
+       users.push(user)
+     }
+   })
+  // console.log(allUsers)
+   return users;
 }
 export const getReceiverController=async(req,res)=>{
     const {receiverId}=req.body
@@ -164,10 +184,10 @@ export const sendMessageController =async (req,res)=>{
 export const setSeenController=async(req,res)=>{
     const {senderId,messageId}=req.body
     const message=await messageModel.findById(messageId).then(async (message)=>{
-        const newSeenBy=await message.seenBy.filter(user=>user!=senderId);
+        message.seenBy.push(senderId);
         console.log(senderId);
-        console.log("new seen by",newSeenBy)
-        const updatedMessage=await messageModel.findByIdAndUpdate(message._id,{seenBy:newSeenBy});
+        console.log("new seen by",message.seenBy)
+        const updatedMessage=await messageModel.findByIdAndUpdate(message._id,{seenBy:message.seenBy})
         res.status(200).send({
             success:true,
             message:"seen updated successfully"

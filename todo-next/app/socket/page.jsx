@@ -33,8 +33,7 @@ function page() {
   },[activeConvo])
   
   const handleSendMessage =async ()=>{
-     let seenByUsers=await activeConvo.users?.filter(user=>user._id!=senderId);
-     let seenBy=await seenByUsers.map(user=>user._id);
+     let seenBy=[senderId];
      const res=await store.dispatch(apiSlice.endpoints.sendMessage.initiate({senderId,chatId:activeConvo._id,seenBy,content:message}))
      console.log(res.data)
      socket.emit("sendMessage");

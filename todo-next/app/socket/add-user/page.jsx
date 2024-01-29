@@ -1,6 +1,6 @@
 "use client"
 import "@/app/socket/add-user/AddUser.css"
-import { apiSlice, useGetAllUsersQuery } from "@/redux/api/apiSlice"
+import { apiSlice, useGetUserOptionQuery } from "@/redux/api/apiSlice"
 import { selectSenderId } from "@/redux/slices/chatDataSlice";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,21 +12,21 @@ import { useRouter } from "next/navigation";
 
 function AddUser() {
   const senderId=useSelector(selectSenderId);
-  const users=useGetAllUsersQuery({userId:senderId});
-  const [searchKey,setSearchKey]=useState("")
-  const [userOptions,setUserOptions]=useState([]);
+  const usersRes=useGetUserOptionQuery({userId:senderId});
+  const [searchName,setSearchName]=useState("")
+  const [userOption,setUserOption]=useState([]);
   const [activeOption,setActiveOption]=useState("");
   const router=useRouter();
   const dispatch=useDispatch();
 
   useEffect(()=>{
-    if(users.data){
-      setUserOptions(users.data.users)
+    if(usersRes.data){
+      setUserOption(usersRes.data.options)
     }
-  },[users])
+  },[usersRes])
 
   const getUsers=()=>{
-    return userOptions.filter(user=>user.name.toLowerCase().includes(searchKey.toLowerCase())||user.email.toLowerCase().includes(searchKey.toLowerCase()))
+    return userOption.filter(user=>user.name.toLowerCase().includes(searchName.toLowerCase())||user.email.toLowerCase().includes(searchName.toLowerCase()))
     
   }
 
@@ -38,7 +38,7 @@ function AddUser() {
         router.push("/socket")
       }
     }).catch(e=>{
-
+       console.log(e)
     });
   }
   return (
@@ -46,11 +46,11 @@ function AddUser() {
       <h1>Start a new conversation</h1>
       <div className="add-user-cont">
         <div className="add-user-input-cont">
-            <input type="text" className="add-user-input" value={searchKey} onChange={e=>{setSearchKey(e.target.value)}} placeholder="Search user"/>
+            <input type="text" className="add-user-input" value={searchName} onChange={e=>{setSearchName(e.target.value)}} placeholder="Search user"/>
             <button disabled={activeOption==""?true:false} className="add-user-button" onClick={handleAddUser}>Add</button>
         </div>
         <div className="user-options-cont">
-            {users.data&&<>
+            {usersRes.data&&<>
                {getUsers().map(user=>(
                 <div className="user-option" key={user._id} onClick={()=>{setActiveOption(user._id)}}>
                   <div className="user-option-icon-cont">

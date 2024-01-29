@@ -17,6 +17,18 @@ export const apiSlice=createApi({
                 }
             })
         }),
+        getUserOption:builder.query({
+            query:(params)=>({
+                url:"/get-options",
+                method:"post",
+                body:{
+                    userId:params.userId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
         getFriendUser:builder.query({
             query:(params)=>({
                 url:"/get-receiver",
@@ -112,4 +124,4 @@ export const apiSlice=createApi({
     })
 });
 
-export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery,useGetAllConvoQuery}=apiSlice
+export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery,useGetAllConvoQuery,useGetUserOptionQuery}=apiSlice

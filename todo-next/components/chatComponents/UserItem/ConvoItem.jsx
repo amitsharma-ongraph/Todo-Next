@@ -28,7 +28,7 @@ function ConvoItem({ convo }) {
   },[])
 
   const isSeen=()=>{
-    return !convo.latestMessage.seenBy.includes(senderId);
+    return convo.latestMessage.seenBy.includes(senderId);
   }
 
   const handleSetSeen=async ()=>{
