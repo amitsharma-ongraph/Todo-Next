@@ -22,30 +22,16 @@ export const getAllUserController=async (req,res)=>{
 export const getUserOptionsController=async(req,res)=>{
     const {userId}=req.body;
     
-    const allUsers=await userModel.find({$and:[{_id:{$ne:userId}},{_id:{$ne:"65b0b29602b7aefdaa2ccac8"}}]}).then(async (allUsers)=>{
-        const allConvo=await chatModel.find({$and:[{users:userId},{isGroupChat:false}]}).then(async (allConvo)=>{
-                
-                allConvo.forEach(convo=>{
-                    allUsers=allUsers.filter(option=>option._id.toString()==convo.users[0]._id.toString());
-                    allUsers=allUsers.filter(option=>option._id.toString()==convo.users[1]._id.toString());
-                })
-
-                return res.status(200).send({
-                    success:true,
-                    message:"all options fetched",
-                    options:allUsers
-                })
-        }).catch(e=>{
-            console.log(e)
-            return res.status(500).send({
-                success:false,
-                message:"error while adding user"
-            })
+    const allUsers=await chatModel.find({$and:[{isGroupChat:false},{_id:userId}]}).then((allUsers)=>{
+        res.status(200).send({
+            success:true,
+            message:"options fetched successfully",
+            options:allUsers
         })
     }).catch((e)=>{
-        return res.status(500).send({
+        res.status(500).send({
             success:false,
-            message:"error while adding user"
+            message:"error while fetching user optins"
         })
     })
     
