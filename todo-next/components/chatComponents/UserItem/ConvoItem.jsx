@@ -12,11 +12,14 @@ import { useEffect } from "react";
 import store from "@/redux/store";
 import { apiSlice } from "@/redux/api/apiSlice";
 import { socket } from "@/src/socket";
+import { usePathname, useRouter } from "next/navigation";
 
 function ConvoItem({ convo }) {
   const activeConvo = useSelector(selectActiveConvo);
   const activeUsers = useSelector(selectActiveUsers);
   const senderId=useSelector(selectSenderId);
+  const pathName=usePathname();
+  const router=useRouter();
 
   const initial=convo.chatName?convo.chatName[0]:"u"
 
@@ -28,12 +31,12 @@ function ConvoItem({ convo }) {
   },[])
 
   const isSeen=()=>{
-    return convo.latestMessage.seenBy.includes(senderId);
+    return convo.latestMessage?.seenBy.includes(senderId);
   }
 
   const handleSetSeen=async ()=>{
     if(activeConvo._id==convo._id&&isSeen()==false){
-      store.dispatch(apiSlice.endpoints.setSeen.initiate({senderId,messageId:convo.latestMessage._id}));
+      store.dispatch(apiSlice.endpoints.setSeen.initiate({senderId,messageId:convo.latestMessage?._id}));
     }
     socket.emit("setSeen");
   }
@@ -53,6 +56,9 @@ function ConvoItem({ convo }) {
   const dispatch = useDispatch();
   const handleConvoSwitch = () => {
     dispatch(updateActiveConvo(convo));
+    if(pathName!="/socket"){
+      router.push("/chat")
+    }
   };
   return (
     <div
@@ -71,7 +77,7 @@ function ConvoItem({ convo }) {
       </div>
       <div className="convo-data">
         <div className="user-name">{convo.chatName}</div>
-        <div className={`last-msg ${!isSeen()?"not-seen":""}`}>{convo.latestMessage.content.substr(0,25)}</div>
+        <div className={`last-msg ${!isSeen()?"not-seen":""}`}>{convo.latestMessage?.content.substr(0,25)}</div>
       </div>
       <div className="pending">
          {!isSeen()&&<div className="pending-icon"></div>}

@@ -120,6 +120,34 @@ export const apiSlice=createApi({
                 }
             })
         }),
+        endConvo:builder.mutation({
+            query:(params)=>({
+                url:"/end-convo",
+                method:"post",
+                body:{
+                    userId:params.userId,
+                    chatId:params.chatId,
+                    isGroupChat:params.isGroupChat,
+                    userName:params.userName
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        removeGroupUser:builder.mutation({
+            query:(params)=>({
+                url:"/remove-user",
+                method:"post",
+                body:{
+                    users:params.users,
+                    chatId:params.chatId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
         
     })
 });
