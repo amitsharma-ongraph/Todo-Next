@@ -29,6 +29,30 @@ export const apiSlice=createApi({
                 }
             })
         }),
+        getGroupOption:builder.query({
+            query:(params)=>({
+                url:"/get-groupOption",
+                method:"post",
+                body:{
+                    chatId:params.chatId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        getGroupMembers:builder.query({
+            query:(params)=>({
+                url:"/get-groupMembers",
+                method:"post",
+                body:{
+                    chatId:params.chatId
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
         getFriendUser:builder.query({
             query:(params)=>({
                 url:"/get-receiver",
@@ -140,8 +164,23 @@ export const apiSlice=createApi({
                 url:"/remove-user",
                 method:"post",
                 body:{
-                    users:params.users,
-                    chatId:params.chatId
+                    userId:params.userId,
+                    chatId:params.chatId,
+                    userName:params.userName
+                },
+                headers:{
+                    "authorization":params.token
+                }
+            })
+        }),
+        addGroupMember:builder.mutation({
+            query:(params)=>({
+                url:"/add-member",
+                method:"post",
+                body:{
+                    userId:params.userId,
+                    chatId:params.chatId,
+                    userName:params.userName
                 },
                 headers:{
                     "authorization":params.token
@@ -152,4 +191,4 @@ export const apiSlice=createApi({
     })
 });
 
-export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery,useGetAllConvoQuery,useGetUserOptionQuery}=apiSlice
+export const {useGetAllUsersQuery,useGetFriendUserQuery,useGetMessagesQuery,useGetAllConvoQuery,useGetUserOptionQuery,useGetGroupOptionQuery,useGetGroupMembersQuery}=apiSlice

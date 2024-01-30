@@ -123,7 +123,7 @@ function page() {
             <Messages />
             {settingMode &&(
               <div className="convo-setting-cont">
-                {activeConvo.groupAdmin==senderId&&<ConvoSettings />}
+                {activeConvo.groupAdmin==senderId&&<ConvoSettings setSettingMode={setSettingMode} />}
                 {activeConvo.groupAdmin!=senderId&&<>
                 {activeConvo.isGroupChat==true&&<div className="leave">
                   <h1>Sure to Leave the group ?</h1>

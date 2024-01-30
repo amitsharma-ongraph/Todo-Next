@@ -7,6 +7,7 @@
     min-width: 280px;
     display: grid;
     grid-template-rows: 60px auto;
+    overflow: hidden;
 }
 .setting-type{
     display: grid;
@@ -27,7 +28,6 @@
     height: 40px;
     width:90%;
     border-radius: 20px;
-    cursor: pointer;
 }
 .user-option-icon{
     height:30px;
@@ -48,6 +48,8 @@
     align-items: center;
     row-gap: 10px;
     margin-top: 20px;
+    overflow: scroll;
+    margin-bottom: 20px;
 }
 .user-option-icon-cont{
     display: flex;
@@ -96,6 +98,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
 }
 .add-user-page h1{
     color:#03363688;
@@ -103,7 +106,8 @@
 }
 .add-user-cont,.remove-user-cont{
     display: grid;
-    grid-template-rows: 60px auto 50px;
+    grid-template-rows: 60px auto;
+    overflow: hidden;
 }
 .setting-submit{
     display: flex;

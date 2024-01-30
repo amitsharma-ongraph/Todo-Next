@@ -56,6 +56,41 @@ const getOptions = async (allConvo, allUsers) => {
     // console.log(allUsers)
     return users;
 }
+
+export const getGroupOptionController=async (req,res)=>{
+    const {chatId}=req.body
+    const chat =await chatModel.findById(chatId).then(async (chat)=>{
+        const allUsers=await userModel.find({$and: [{ _id: { $ne: chat.groupAdmin } }, { _id: { $ne: "65b0b29602b7aefdaa2ccac8" } }]});
+        const options =await getGroupOptions(allUsers,chat.users);
+        return res.status(200).send({
+            success:true,
+            message:"group options fetched successfully",
+            options
+        })
+    }).catch(e=>{
+        console.log(e)
+        res.status(500).send({
+            success:false,
+            message:"error while fetching group option"
+        })
+    })
+}
+
+const getGroupOptions=async (allUsers,groupUsers)=>{
+    let options=[];
+    allUsers.forEach(user=>{
+        let add=true;
+        groupUsers.forEach(groupUser=>{
+            if(groupUser.toString()==user._id.toString()){
+               add=false
+            }
+        })
+        if(add){
+            options.push(user)
+        }
+    })
+    return options;
+}
 export const getReceiverController = async (req, res) => {
     const { receiverId } = req.body
     try {
@@ -313,34 +348,77 @@ export const endChatController = async (req, res) => {
 }
 
 export const removeGroupUserController=async (req,res)=>{
-    const {users,chatId,adminName,userNames}=req.body;
-    console.log(users);
+    const {userId,chatId,userName}=req.body;
+    console.log(userId);
     const chat = await chatModel.findById(chatId).then(async (chat)=>{
        console.log(chat.users)
        let newUsers=[]
        chat.users.forEach(chatUser=>{
-         if(!users.includes(chatUser._id.toString())){
+         if(chatUser._id.toString()!=userId){
             newUsers.push(chatUser)
-         }
+         } 
        })
        console.log(newUsers)
-       await chatModel.findByIdAndUpdate(chat._id,{users:newUsers}).then(async ()=>{
-        let userNamesString="";
-        userNames.forEach(name=>{userNamesString+" "+name})
-        const botMessage = await new messageModel({ senderId: "65b0b29602b7aefdaa2ccac8", chatId: chat._id, content: adminName+" removed "+ userNamesString}).save().then(async (botMessage) => {
+       await chatModel.findByIdAndUpdate(chat._id,{users:newUsers}).then(async (chat)=>{
+        const botMessage = await new messageModel({ senderId: "65b0b29602b7aefdaa2ccac8", chatId: chat._id, content:userName+" is removed" }).save().then(async (botMessage) => {
             await chatModel.findByIdAndUpdate(chat._id, { latestMessage: botMessage._id }).then(() => {
                 return res.status(200).send({
                     success: true,
-                    message: "removed successfully",
+                    message: "added successfully",
                 })
             })
         })
-       })
+    })
+       
+        
     }).catch(e=>{
         console.log(e)
         return res.status(500).send({
             success:false,
             message:"error while removing user"
+        })
+    })
+}
+
+export const addGroupMemberController=async (req,res)=>{
+    const {chatId,userId,userName}=req.body;
+    console.log(userName)
+    const chat=await chatModel.findById(chatId).then(async (chat)=>{
+        console.log(chat.users)
+        const newUsers=[...chat.users,userId];
+        await chatModel.findByIdAndUpdate(chat._id,{users:newUsers}).then(async (chat)=>{
+            const botMessage = await new messageModel({ senderId: "65b0b29602b7aefdaa2ccac8", chatId: chat._id, content:userName+" is added" }).save().then(async (botMessage) => {
+                await chatModel.findByIdAndUpdate(chat._id, { latestMessage: botMessage._id }).then(() => {
+                    return res.status(200).send({
+                        success: true,
+                        message: "added successfully",
+                    })
+                })
+            })
+        })
+        
+    }).catch(e=>{
+        console.log(e)
+        return res.status(500).send({
+            success:false,
+            message:"error while adding user"
+        })
+    })
+}
+
+export const getGroupMembersController=async(req,res)=>{
+    const {chatId}=req.body
+    await chatModel.findById(chatId).populate("users").then(chat=>{
+        return res.status(200).send({
+            success:true,
+            messages:"group users fetched successfully",
+            users:chat.users
+        })
+    }).catch(e=>{
+        console.log(e)
+        res.status(500).send({
+            success:false,
+            message:"users fetched successfully"
         })
     })
 }
