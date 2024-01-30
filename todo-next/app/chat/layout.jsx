@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import "@/app/chat/chatLayout.css";
 import { socket } from "@/src/socket";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSenderId, setActiveUsers } from "@/redux/slices/chatDataSlice";
+import { selectCallActive, selectSenderId, setActiveUsers } from "@/redux/slices/chatDataSlice";
 import { useEffect } from "react";
 import { useGetAllConvoQuery, useGetAllUsersQuery } from "@/redux/api/apiSlice";
 import ConvoItem from "@/components/chatComponents/UserItem/ConvoItem";
@@ -13,12 +13,14 @@ import singleUser from "@/public/images/singleUser.png";
 import multipleUser from "@/public/images/users.png";
 import { usePathname, useRouter } from "next/navigation";
 import chatScreen from "@/public/images/chat-screen.png"
+import CallComponent from "@/components/chatComponents/calllComponent/CallComponent"
 
 function layout({ children }) {
   const router = useRouter();
   const pathName = usePathname();
   const hostUserId = useSelector(selectSenderId);
   const hostUser = useSelector(selcetUser);
+  const isCallActive=useSelector(selectCallActive);
 
   const dispatch = useDispatch();
   const userId = useSelector(selectSenderId);
@@ -57,6 +59,7 @@ function layout({ children }) {
     <>
       <Navbar />
       <div className="chat-app-layout">
+        {isCallActive&&<CallComponent/>}
         <div className="chat-screen">
           <div className="left-side-bar">
             <div className="host-details">

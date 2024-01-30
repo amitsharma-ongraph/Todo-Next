@@ -1,0 +1,43 @@
+.call-cont{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #d2e9e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 60px;
+}
+.call-section{
+    height: 95%;
+    width:60%;
+    background-color: #003636;
+    border-radius: 40px;
+    transition: 0.5s;
+    position: relative;
+}
+.call-options{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+}
+.call-options button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d2e9e9;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+@media  (max-width:600px) {
+    .call-section{
+        width: 95%;
+    }
+}
