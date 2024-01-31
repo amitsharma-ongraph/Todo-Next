@@ -11,8 +11,7 @@
 }
 .call-section{
     height: 95%;
-    width:60%;
-    background-color: #003636;
+    width:80%;
     border-radius: 40px;
     transition: 0.5s;
     position: relative;
@@ -40,4 +39,66 @@
     .call-section{
         width: 95%;
     }
+}
+.host-video-cont,.friend-video-cont{
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.host-video-cont{
+    background-color: #8ffcfc;
+}
+.friend-video-cont{
+    background-color: #003636;
+}
+.mini-video{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 25%;
+    width: 25%;
+    z-index: 4;
+}
+.large-video{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+}
+video{
+    height: 100%;
+    width: 100%;
+}
+.black-cont{
+    background-color: #202020;
+}
+.host-video-icon{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #003636;
+    color: #d2e9e9;
+    z-index: 5;
+}
+.video-cont{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.large-btn{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    z-index: 6;
+    display: none;
+}
+.video-cont:hover .large-btn{
+    display: block;
 }

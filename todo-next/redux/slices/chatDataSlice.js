@@ -16,7 +16,7 @@ export const chatDataSlice=createSlice({
         activeConvo:{},
         activeUsers:[],
         modId:"65b0b29602b7aefdaa2ccac8",
-        callActive:true
+        callActive:false
     },
     reducers:{
        updateSender:(state,action)=>{

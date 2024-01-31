@@ -53,6 +53,16 @@ const getUsersList=(activeUsers)=>{
    });
    return users
 }
+
+const getSocketId=(id)=>{
+    console.log(activeUsers)
+    for(let i=0;i<activeUsers.length;i++){
+        if(activeUsers[i].userId==id){
+            return activeUsers[i].socketId
+        }
+    }
+    return null
+}
 io.on("connection", (socket) => {
     console.log("Socket connected ")
     socket.on("setup", (userData) => {
@@ -81,6 +91,15 @@ io.on("connection", (socket) => {
     })
     socket.on("newConvo",()=>{
         io.emit("onNewConvo");
+    })
+
+    socket.on("startCall",({callerId,receiverId,name,signal})=>{
+        const callerSocketId=getSocketId(callerId)
+        const receiverSocketid=getSocketId(receiverId)
+        io.to(receiverSocketid).emit('incomingCall',{callerSocketId,name,signal})
+    })
+    socket.on("acceptCall",({callerSocketId,signal})=>{
+        io.to(callerSocketId).emit("callAccepted",signal)   
     })
 }) 
 io.on("connect_error", (error) => {

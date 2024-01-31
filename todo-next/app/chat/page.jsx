@@ -5,6 +5,7 @@ import {
   selectActiveConvo,
   selectActiveUsers,
   selectSenderId,
+  setCallActive,
   updateActiveConvo,
 } from "@/redux/slices/chatDataSlice";
 import Image from "next/image";
@@ -19,6 +20,7 @@ import { apiSlice } from "@/redux/api/apiSlice";
 import ConvoSettings from "@/components/chatComponents/convoSettings/ConvoSettings";
 import settingIcon from "@/public/images/settings.png";
 import leaveIcon from "@/public/images/remove-user.png"
+import videoCall from "@/public/images/video.png"
 import { selcetUser } from "@/redux/slices/userSlice";
 
 function page() {
@@ -69,6 +71,10 @@ function page() {
     }
   }
 
+  const handleStartCall=()=>{
+     dispatch(setCallActive(true));
+     socket.emit("startCall",{callerId:senderId,name:hostUser.name,receiverId:"65a0e6f2ed2e1b70239566c6"})
+  }
   return (
     <>
       {activeConvo.chatName && (
@@ -98,7 +104,11 @@ function page() {
                 )}
               </div>
             </div>
-            <div>
+            <div className="convo-details-control">
+
+              <button onClick={handleStartCall}>
+                <Image src={videoCall} height={24} width={24} alt="call"/>
+              </button>
                 {activeConvo.groupAdmin==senderId&&<button
                   className="setting-btn"
                   onClick={() => {

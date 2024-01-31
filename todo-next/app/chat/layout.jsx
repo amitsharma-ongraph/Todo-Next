@@ -53,6 +53,10 @@ function layout({ children }) {
     socket.on("onSetSeen",()=>{
       convoData.refetch();
     })
+    socket.on("incomingCall",({callerSocketId,name,signal})=>{
+      console.log(name+" is calling you")
+      socket.emit("acceptCall",{callerSocketId})
+    })
   }, []);
 
   return (
